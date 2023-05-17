@@ -41,4 +41,5 @@ class CartModel {
       'image': image
     };
   }
+  
 }

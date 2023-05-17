@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping_cart_sql/model/cart_model.dart';
+import 'package:shopping_cart_sql/services/db_helper.dart';
 
 class CartProvider with ChangeNotifier {
   int _counter = 0;
+  DBHelper db = DBHelper();
 
   int get counter => _counter;
+  late Future<List<CartModel>> _cart;
+
+  Future<List<CartModel>> get cart => _cart;
+
+  Future<List<CartModel>> getData() async {
+    _cart = db.getCartList();
+    return _cart;
+  }
 
   double _totalPrice = 0.0;
   double get totalPrice => _totalPrice;

@@ -37,4 +37,10 @@ class DBHelper {
     await dbClient?.insert('cart', cart.toMap());
     return cart;
   }
+
+  Future<List<CartModel>> getCartList() async {
+    var dbClient = await db;
+    final List<Map<String, Object?>> quryResult = await dbClient!.query('cart');
+    return quryResult.map((e) => CartModel.fromMap(e)).toList();
+  }
 }
