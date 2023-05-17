@@ -95,6 +95,37 @@ class _CartScreenState extends State<CartScreen> {
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500),
                                         ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              snapshot.data![index].productName
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                dbHelper!.delete(
+                                                    snapshot.data![index].id!);
+                                                cart.removeCounter();
+                                                cart.removeTotalPrice(
+                                                  double.parse(
+                                                    snapshot.data![index]
+                                                        .productPrice
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                         const SizedBox(
                                           height: 5,
                                         ),
@@ -114,25 +145,42 @@ class _CartScreenState extends State<CartScreen> {
                                 ],
                               ),
                               Align(
-                                alignment: Alignment.topRight,
+                                alignment: Alignment.centerRight,
                                 child: InkWell(
-                                  onTap: () {
-                                    dbHelper!.delete(snapshot.data![index].id!);
-                                    cart.removeCounter();
-                                    cart.removeTotalPrice(
-                                      double.parse(
-                                        snapshot.data![index].productPrice
-                                            .toString(),
-                                      ),
-                                    );
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                     height: 35,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                        color: Colors.red,
+                                        color: Colors.deepPurple,
                                         borderRadius: BorderRadius.circular(5)),
-                                    child: const Center(child: Text('Remove')),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              
+                                            },
+                                            child: const Icon(Icons.add,
+                                                color: Colors.white),
+                                          ),
+                                          Text(
+                                            snapshot.data![index].quantity
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 25),
+                                          ),
+                                          const Icon(
+                                            Icons.remove,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),

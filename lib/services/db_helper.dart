@@ -47,6 +47,10 @@ class DBHelper {
   //Delete product
   Future<int> delete(int id) async {
     var dbClient = await db;
-    return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
+    return await dbClient!.delete(
+      'cart',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
