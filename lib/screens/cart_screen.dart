@@ -240,7 +240,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   .data![index].initialPrice!;
                                               quantity--;
                                               int? newPrice = price * quantity;
-                                              if (quantity >= 1) {
+                                              if (quantity > 0) {
                                                 dbHelper!
                                                     .updateQuantity(
                                                   CartModel(
