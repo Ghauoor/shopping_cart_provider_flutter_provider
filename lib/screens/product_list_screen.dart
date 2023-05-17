@@ -173,11 +173,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                         height: 35,
                                         width: 100,
                                         decoration: BoxDecoration(
-                                            color: Colors.amber,
+                                            color: Colors.deepPurple,
                                             borderRadius:
                                                 BorderRadius.circular(5)),
                                         child: const Center(
-                                            child: Text('Add to cart')),
+                                            child: Text(
+                                          'Add to cart',
+                                          style: TextStyle(color: Colors.white),
+                                        )),
                                       ),
                                     ),
                                   ),
