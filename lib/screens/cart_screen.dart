@@ -54,6 +54,20 @@ class _CartScreenState extends State<CartScreen> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<CartModel>> snapshot) {
               if (snapshot.hasData) {
+                if (snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        const Image(
+                            image: AssetImage('assets/images/emptycart.png')),
+                        Text(
+                          'Empty Cart',
+                          style: Theme.of(context).textTheme.displaySmall,
+                        )
+                      ],
+                    ),
+                  );
+                }
                 return Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data!.length,
@@ -291,17 +305,20 @@ class _CartScreenState extends State<CartScreen> {
             },
           ),
           Consumer<CartProvider>(builder: (context, value, child) {
-            return Visibility(
-              visible: value.getTotalPrice().toStringAsFixed(2) == '0.0'
-                  ? false
-                  : true,
-              child: Column(
-                children: [
-                  ReusableWidget(
-                    title: 'Sub total',
-                    value: r'$' + value.getTotalPrice().toString(),
-                  )
-                ],
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Visibility(
+                visible: value.getTotalPrice().toStringAsFixed(2) == "0.00"
+                    ? false
+                    : true,
+                child: Column(
+                  children: [
+                    ReusableWidget(
+                      title: 'Sub total',
+                      value: r'$' + value.getTotalPrice().toString(),
+                    )
+                  ],
+                ),
               ),
             );
           })
