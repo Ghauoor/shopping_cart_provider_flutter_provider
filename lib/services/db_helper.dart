@@ -43,4 +43,10 @@ class DBHelper {
     final List<Map<String, Object?>> quryResult = await dbClient!.query('cart');
     return quryResult.map((e) => CartModel.fromMap(e)).toList();
   }
+
+  //Delete product
+  Future<int> delete(int id) async {
+    var dbClient = await db;
+    return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
+  }
 }

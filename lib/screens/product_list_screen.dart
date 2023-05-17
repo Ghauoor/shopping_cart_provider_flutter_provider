@@ -6,6 +6,8 @@ import 'package:shopping_cart_sql/model/provider/cart_provider.dart';
 import 'package:shopping_cart_sql/screens/cart_screen.dart';
 import 'package:shopping_cart_sql/services/db_helper.dart';
 
+import '../widget/reusable_widget.dart';
+
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
 
@@ -191,6 +193,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
               },
             ),
           ),
+          Consumer<CartProvider>(builder: (context, value, child) {
+            return Column(
+              children: [
+                ReusableWidget(
+                  title: 'Sub total',
+                  value: r'$' + value.getTotalPrice().toString(),
+                )
+              ],
+            );
+          })
         ],
       ),
     );

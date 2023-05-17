@@ -4,6 +4,8 @@ import 'package:badges/badges.dart' as badges;
 import 'package:shopping_cart_sql/model/cart_model.dart';
 
 import '../model/provider/cart_provider.dart';
+import '../services/db_helper.dart';
+import '../widget/reusable_widget.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -13,6 +15,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  DBHelper? dbHelper = DBHelper();
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
@@ -110,6 +113,29 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ],
                               ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: InkWell(
+                                  onTap: () {
+                                    dbHelper!.delete(snapshot.data![index].id!);
+                                    cart.removeCounter();
+                                    cart.removeTotalPrice(
+                                      double.parse(
+                                        snapshot.data![index].productPrice
+                                            .toString(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 35,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: const Center(child: Text('Remove')),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -121,6 +147,21 @@ class _CartScreenState extends State<CartScreen> {
               return const Center(child: CircularProgressIndicator());
             },
           ),
+          Consumer<CartProvider>(builder: (context, value, child) {
+            return Visibility(
+              visible: value.getTotalPrice().toStringAsFixed(2) == '0.0'
+                  ? false
+                  : true,
+              child: Column(
+                children: [
+                  ReusableWidget(
+                    title: 'Sub total',
+                    value: r'$' + value.getTotalPrice().toString(),
+                  )
+                ],
+              ),
+            );
+          })
         ],
       ),
     );
